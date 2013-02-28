@@ -15,53 +15,45 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import genPit
-pits = []
+pits = {}
 dugPits = []
 time = 480
 artifacts = 0
+
 class pit(object):
     def __init__(self, x, y):
+        self.name = str("pit" + str(x) + "x" + str(y))
         self.x = x
         self.y = y
         self.arts = genPit.artifactGen()
         self.diffNum = genPit.difficultyGen()
         self.diffName = genPit.nameDiff(self.diffNum)
+        
 for i in range (1,11):
     for j in range (1,11):
         dugPit = pit(i,j)
-        pits.append(dugPit)
+        pits[dugPit.name] = dugPit
+        
 def digPit(x,y):
-    for dugPit in dugPits:
-        if dugPit.x == x and dugPit.y == y:
-            print "You dug that pit already!"
-            return 0
-    for dugPit in pits:
-        if dugPit.x == x and dugPit.y == y:
-#            print dugPit.x
-#            print dugPit.y
-#            print dugPit.arts
-#            print dugPit.diffNum
-            dugPits.append(dugPit)
-            pits.remove(dugPit)
-#            print dugPit.diffName
-            duration = dugPit.arts * 2 + dugPit.diffNum * 5
-            print "You found " + str(dugPit.arts) + " artifacts in a pit of " + dugPit.diffName + "!"
-            print "It took you " + str(duration) + " minutes!"
-            return duration
-#for dugPit in pits:
-#    print dugPit.arts
-#    print dugPit.diffNum
-#    print dugPit.diffName
-#    print dugPit.x
-#    print dugPit.y
-print len(pits)
+    pitName = str("pit" + str(x) + "x" + str(y))
+    if pitName in pits:
+        duration = pits[pitName].arts * 2 + pits[pitName].diffNum * 5
+        print "\nYou found " + str(pits[pitName].arts) + " artifacts in a pit of " + pits[pitName].diffName + "!"
+        print "It took you " + str(duration) + " minutes!"
+        del pits[pitName]
+        return duration
+    else:
+        print "\nYou dug that pit already!"
+        return 0
+
 while time > 0:
     gridx = raw_input("X coord of pit you'd like to dig? ")
     gridy = raw_input("Y coord of pit you'd like to dig? ")
-    if 0 < int(gridx) < 11 and 0 < int(gridy) < 10:
+    if 0 < int(gridx) < 11 and 0 < int(gridy) < 11:
         time -= digPit(int(gridx), int(gridy))
-        print "Remaining time: " + str(time)
-        print str(len(pits)) + " pit remaining!"
+        print "Remaining time: " + str(time/60) + " hours and " + str(time%60) + " minutes."
+        print str(len(pits)) + " pits remaining!\n"
     else:
-        print "Not a valid pit"
-print "Congratulations!  You finished a day of archaeology!"
+        print "\nNot a valid pit\n"
+        
+print "\nCongratulations!  You finished a day of archaeology!"
