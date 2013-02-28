@@ -20,11 +20,6 @@ pits = {}
 time = 480
 artifacts = 0
         
-for i in range (1,11):
-    for j in range (1,11):
-        dugPit = pit(i,j)
-        pits[dugPit.name] = dugPit
-        
 def digPit(x,y):
     pitName = str("pit" + str(x) + "x" + str(y))
     if pitName in pits:
@@ -37,6 +32,11 @@ def digPit(x,y):
     else:
         print "\nYou dug that pit already!"
         return [0, 0]
+
+for i in range (1,11):
+    for j in range (1,11):
+        dugPit = pit(i,j)
+        pits[dugPit.name] = dugPit
 
 while time > 0:
     gridx = raw_input("X coord of pit you'd like to dig? ")
