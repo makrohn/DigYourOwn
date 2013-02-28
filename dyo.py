@@ -16,7 +16,6 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import genPit
 pits = {}
-dugPits = []
 time = 480
 artifacts = 0
 
@@ -28,6 +27,7 @@ class pit(object):
         self.arts = genPit.artifactGen()
         self.diffNum = genPit.difficultyGen()
         self.diffName = genPit.nameDiff(self.diffNum)
+        self.duration = self.arts * 2 + self.diffNum * 5
         
 for i in range (1,11):
     for j in range (1,11):
@@ -40,17 +40,21 @@ def digPit(x,y):
         duration = pits[pitName].arts * 2 + pits[pitName].diffNum * 5
         print "\nYou found " + str(pits[pitName].arts) + " artifacts in a pit of " + pits[pitName].diffName + "!"
         print "It took you " + str(duration) + " minutes!"
+        arts = pits[pitName].arts
         del pits[pitName]
-        return duration
+        return [duration, arts]
     else:
         print "\nYou dug that pit already!"
-        return 0
+        return [0, 0]
 
 while time > 0:
     gridx = raw_input("X coord of pit you'd like to dig? ")
     gridy = raw_input("Y coord of pit you'd like to dig? ")
     if 0 < int(gridx) < 11 and 0 < int(gridy) < 11:
-        time -= digPit(int(gridx), int(gridy))
+        results = digPit(int(gridx), int(gridy))
+        time -= results[0]
+        artifacts += results[1]
+        print "You've found " + str(artifacts) + " artifacts!"
         print "Remaining time: " + str(time/60) + " hours and " + str(time%60) + " minutes."
         print str(len(pits)) + " pits remaining!\n"
     else:
