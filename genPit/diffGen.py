@@ -15,7 +15,7 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import random
-difficulty = {1: 'clay', 2: 'rocky till', 3: 'roots', 4: "silt", 5: "beach sand"}
+difficulty = {5: 'clay', 4: 'rocky till', 3: 'roots', 2: "silt", 1: "beach sand"}
 def difficultyGen():
     numDiff = random.randint(1,5)
     return numDiff
