@@ -17,3 +17,13 @@
 from artifactGen import artifactGen
 from diffGen import difficultyGen
 from diffGen import nameDiff
+
+class pit(object):
+    def __init__(self, x, y):
+        self.name = str("pit" + str(x) + "x" + str(y))
+        self.x = x
+        self.y = y
+        self.arts = artifactGen()
+        self.diffNum = difficultyGen()
+        self.diffName = nameDiff(self.diffNum)
+        self.duration = self.arts * 2 + self.diffNum * 5

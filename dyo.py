@@ -15,19 +15,10 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import genPit
+from genPit import pit
 pits = {}
 time = 480
 artifacts = 0
-
-class pit(object):
-    def __init__(self, x, y):
-        self.name = str("pit" + str(x) + "x" + str(y))
-        self.x = x
-        self.y = y
-        self.arts = genPit.artifactGen()
-        self.diffNum = genPit.difficultyGen()
-        self.diffName = genPit.nameDiff(self.diffNum)
-        self.duration = self.arts * 2 + self.diffNum * 5
         
 for i in range (1,11):
     for j in range (1,11):
