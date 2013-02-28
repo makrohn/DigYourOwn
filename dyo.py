@@ -14,7 +14,39 @@
 #
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import digPit
-print str(digPit.numArts), 'Artifacts'
-print digPit.numDiff
-print digPit.nameDiff
+import genPit
+pits = []
+def digPit():
+    print str(genPit.artifactGen()), 'Artifacts'
+    difficulty = genPit.difficultyGen()
+    print difficulty
+    print genPit.nameDiff(difficulty)
+class pit(object):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.arts = genPit.artifactGen()
+        self.diffNum = genPit.difficultyGen()
+        self.diffName = genPit.nameDiff(self.diffNum)
+for i in range (1,11):
+    for j in range (1,11):
+        dugPit = pit(i,j)
+        pits.append(dugPit)
+#for dugPit in pits:
+#    print dugPit.arts
+#    print dugPit.diffNum
+#    print dugPit.diffName
+#    print dugPit.x
+#    print dugPit.y
+print len(pits)
+gridx = raw_input("X coord of pit you'd like to dig? ")
+gridy = raw_input("Y coord of pit you'd like to dig? ")
+for dugPit in pits:
+    if dugPit.x == int(gridx) and dugPit.y == int(gridy):
+        print dugPit.x
+        print dugPit.y
+        print dugPit.arts
+        print dugPit.diffNum
+        pits.remove(dugPit)
+        print dugPit.diffName
+print len(pits)
