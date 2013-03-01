@@ -16,6 +16,13 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import genPit
 from genPit import pit
+import pyglet
+from pyglet.window import mouse
+
+gameWindow = pyglet.window.Window()
+siteMap = pyglet.resource.image('resources/map.png')
+xMark = pyglet.resource.image('resources/x.png')
+
 pits = {}
 time = 480
 artifacts = 0
@@ -39,27 +46,33 @@ for i in range (1,11):
     for j in range (1,11):
         dugPit = pit(i,j)
         pits[dugPit.name] = dugPit
-
-# Play the game!
-print "Welcome to Dig Your Own Site!  The site is %d by %d." % (10,10)
-while time > 0:
-    gridx = raw_input("X coord of pit you'd like to dig? ")
-    gridy = raw_input("Y coord of pit you'd like to dig? ")
-    if gridx.lower() == 'exit' or gridy.lower() == 'exit':
-        break
-    try:
-        if 0 < int(gridx) < 11 and 0 < int(gridy) < 11:
-            results = digPit(int(gridx), int(gridy))
-            time -= results[0]
-            artifacts += results[1]
-            print "You've found " + str(artifacts) + " artifacts!"
-            print "Remaining time: " + str(time/60) + " hours and " + str(time%60) + " minutes."
-            print str(len(pits)) + " pits remaining!\n"
-            print "To leave the field early, type 'Exit'"
-        else:
-            print "\nThe site is only %d by %d!\n" % (10,10)
-    except ValueError:
-        print "\nNot a valid pit\n"
         
+def pickPit(x, y):
+    if 0 < x < 11 and 0 < y < 11:
+        results = digPit(x, y)
+        global time
+        global artifacts
+        time -= results[0]
+        artifacts += results[1]
+        print "You've found " + str(artifacts) + " artifacts!"
+        if time > 0:
+            print "Remaining time: " + str(time/60) + " hours and " + str(time%60) + " minutes."
+
+@gameWindow.event
+def on_draw():
+    gameWindow.clear()
+    siteMap.blit(0,0)
+
+@gameWindow.event
+def on_mouse_press(x, y, button, modifiers):
+    if time > 0:
+        gridx = ((x - x % 32) / 32 + 1)
+        gridy = ((y - y % 32) / 32 + 1)
+        pickPit(gridx, gridy)
+    if time < 0:
+        gameWindow.close()
+    
+pyglet.app.run()
+
 print "\nCongratulations!  You finished a day of archaeology!"
 print "You found a total of %d artifacts!" % (artifacts)
