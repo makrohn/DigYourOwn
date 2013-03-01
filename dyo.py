@@ -18,14 +18,21 @@ import genPit
 from genPit import pit
 import pyglet
 from pyglet.window import mouse
+from pyglet.gl import *
+
+glEnable(GL_BLEND)
+glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
 gameWindow = pyglet.window.Window()
 siteMap = pyglet.resource.image('resources/map.png')
-xMark = pyglet.resource.image('resources/x.png')
+xMark = pyglet.image.load('resources/x.png')
 
 pits = {}
 time = 480
 artifacts = 0
+gridx = -32
+gridy = -32
+marks = []
 
 # Function to find the target pit and report what's in it        
 def digPit(x,y):
@@ -55,6 +62,8 @@ def pickPit(x, y):
         time -= results[0]
         artifacts += results[1]
         print "You've found " + str(artifacts) + " artifacts!"
+        marks.append([gridx, gridy])
+        print marks
         if time > 0:
             print "Remaining time: " + str(time/60) + " hours and " + str(time%60) + " minutes."
 
@@ -62,10 +71,14 @@ def pickPit(x, y):
 def on_draw():
     gameWindow.clear()
     siteMap.blit(0,0)
+    for mark in marks:
+        xMark.blit((mark[0] - 1) * 32, (mark[1] - 1) * 32, 1)
 
 @gameWindow.event
 def on_mouse_press(x, y, button, modifiers):
     if time > 0:
+        global gridx
+        global gridy
         gridx = ((x - x % 32) / 32 + 1)
         gridy = ((y - y % 32) / 32 + 1)
         pickPit(gridx, gridy)
