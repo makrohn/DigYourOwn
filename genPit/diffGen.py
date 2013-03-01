@@ -14,7 +14,10 @@
 #
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 import random
+
+# Determine how hard it is to dig a pit.
 difficulty = {5: 'clay', 4: 'rocky till', 3: 'roots', 2: "silt", 1: "beach sand"}
 def difficultyGen():
     numDiff = random.randint(1,5)

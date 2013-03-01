@@ -18,6 +18,9 @@ from artifactGen import artifactGen
 from diffGen import difficultyGen
 from diffGen import nameDiff
 
+# Define a pit.  Each pit has a location, name to search in the pits {}
+# dictionary by, a difficulty integer and name, and a simple equation
+# to determine how long it takes someone to dig it.
 class pit(object):
     def __init__(self, x, y):
         self.name = str("pit" + str(x) + "x" + str(y))
@@ -26,4 +29,5 @@ class pit(object):
         self.arts = artifactGen()
         self.diffNum = difficultyGen()
         self.diffName = nameDiff(self.diffNum)
+        # Excavation is slowed down by soil type and finding stuff.
         self.duration = self.arts * 2 + self.diffNum * 5

@@ -14,7 +14,12 @@
 #
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 import random
+
+# A pit has a certain number of artifacts.  This is going to later be
+# elaborated to include proximity to features and some random chance
+# as to whether or not a pit will contain any artifacts at all.
 def artifactGen():
     numArts = random.randint(1,10)
     return numArts

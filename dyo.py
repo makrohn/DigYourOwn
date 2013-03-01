@@ -19,7 +19,8 @@ from genPit import pit
 pits = {}
 time = 480
 artifacts = 0
-        
+
+# Function to find the target pit and report what's in it        
 def digPit(x,y):
     pitName = str("pit" + str(x) + "x" + str(y))
     if pitName in pits:
@@ -33,11 +34,13 @@ def digPit(x,y):
         print "\nYou dug that pit already!"
         return [0, 0]
 
+# Generate a 10x10 grid full of pits.
 for i in range (1,11):
     for j in range (1,11):
         dugPit = pit(i,j)
         pits[dugPit.name] = dugPit
 
+# Play the game!
 while time > 0:
     gridx = raw_input("X coord of pit you'd like to dig? ")
     gridy = raw_input("Y coord of pit you'd like to dig? ")
