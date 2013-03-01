@@ -41,17 +41,25 @@ for i in range (1,11):
         pits[dugPit.name] = dugPit
 
 # Play the game!
+print "Welcome to Dig Your Own Site!  The site is %d by %d." % (10,10)
 while time > 0:
     gridx = raw_input("X coord of pit you'd like to dig? ")
     gridy = raw_input("Y coord of pit you'd like to dig? ")
-    if 0 < int(gridx) < 11 and 0 < int(gridy) < 11:
-        results = digPit(int(gridx), int(gridy))
-        time -= results[0]
-        artifacts += results[1]
-        print "You've found " + str(artifacts) + " artifacts!"
-        print "Remaining time: " + str(time/60) + " hours and " + str(time%60) + " minutes."
-        print str(len(pits)) + " pits remaining!\n"
-    else:
+    if gridx.lower() == 'exit' or gridy.lower() == 'exit':
+        break
+    try:
+        if 0 < int(gridx) < 11 and 0 < int(gridy) < 11:
+            results = digPit(int(gridx), int(gridy))
+            time -= results[0]
+            artifacts += results[1]
+            print "You've found " + str(artifacts) + " artifacts!"
+            print "Remaining time: " + str(time/60) + " hours and " + str(time%60) + " minutes."
+            print str(len(pits)) + " pits remaining!\n"
+            print "To leave the field early, type 'Exit'"
+        else:
+            print "\nThe site is only %d by %d!\n" % (10,10)
+    except ValueError:
         print "\nNot a valid pit\n"
         
 print "\nCongratulations!  You finished a day of archaeology!"
+print "You found a total of %d artifacts!" % (artifacts)
