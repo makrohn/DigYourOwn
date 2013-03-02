@@ -33,18 +33,44 @@ artifacts = 0
 gridx = -32
 gridy = -32
 marks = []
+youFound = pyglet.text.Label("",
+                             font_name = "Times New Roman",
+                             font_size = 12,
+                             x = 336, y = 256,
+                             anchor_x = 'left', anchor_y = 'top')
+pitStats = pyglet.text.Label("",
+                             font_name = "Times New Roman",
+                             font_size = 12,
+                             x = 336, y = 320,
+                             anchor_x = 'left', anchor_y = 'top')
 
 # Function to find the target pit and report what's in it        
 def digPit(x,y):
     pitName = str("pit" + str(x) + "x" + str(y))
+    global pitStats
     if pitName in pits:
         duration = pits[pitName].arts * 2 + pits[pitName].diffNum * 5
-        print "\nYou found " + str(pits[pitName].arts) + " artifacts in a pit of " + pits[pitName].diffName + "!"
-        print "It took you " + str(duration) + " minutes!"
+        pitStats = pyglet.text.Label("You found " + str(pits[pitName].arts) + " artifacts in a pit of " + pits[pitName].diffName + "!"
+                                     + " It took you " + str(duration) + " minutes!",
+                                     multiline = True,
+                                     width = 240,
+                                     font_name = "Helvetica",
+                                     bold = True,
+                                     font_size = 12,
+                                     x = 336, y = 320,
+                                     anchor_x = 'left', anchor_y = 'top')
         arts = pits[pitName].arts
         del pits[pitName]
         return [duration, arts]
     else:
+        pitStats = pyglet.text.Label("You dug that pit already!",
+                                     multiline = True,
+                                     width = 240,
+                                     font_name = "Helvetica",
+                                     bold = True,
+                                     font_size = 12,
+                                     x = 336, y = 320,
+                                     anchor_x = 'left', anchor_y = 'top')
         print "\nYou dug that pit already!"
         return [0, 0]
 
@@ -61,9 +87,17 @@ def pickPit(x, y):
         global artifacts
         time -= results[0]
         artifacts += results[1]
-        print "You've found " + str(artifacts) + " artifacts!"
+        global youFound
+        youFound = pyglet.text.Label("You've found " + str(artifacts) + " artifacts!"
+                                     " Remaining time: " + str(time/60) + " hours and " + str(time%60) + " minutes.",
+                                     multiline = True,
+                                     width = 240,
+                                     font_name = "Times New Roman",
+                                     color = (255,255,255,255),
+                                     font_size = 12,
+                                     x = 336, y = 256,
+                                     anchor_x = 'left', anchor_y = 'top')
         marks.append([gridx, gridy])
-        print marks
         if time > 0:
             print "Remaining time: " + str(time/60) + " hours and " + str(time%60) + " minutes."
 
@@ -71,6 +105,8 @@ def pickPit(x, y):
 def on_draw():
     gameWindow.clear()
     siteMap.blit(0,0)
+    youFound.draw()
+    pitStats.draw()
     for mark in marks:
         xMark.blit((mark[0] - 1) * 32, (mark[1] - 1) * 32, 1)
 
