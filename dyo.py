@@ -19,6 +19,7 @@ from genPit import pit
 import pyglet
 from pyglet.window import mouse
 from pyglet.gl import *
+import tileloader
 
 glEnable(GL_BLEND)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -26,6 +27,9 @@ glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 gameWindow = pyglet.window.Window()
 siteMap = pyglet.resource.image('resources/map.png')
 xMark = pyglet.image.load('resources/x.png')
+grass = tileloader.loadTileset('resources/grass.png')
+textMap = tileloader.loadTmx('resources/demo.tmx')
+gameMap = tileloader.renderTiles(textMap, grass)
 
 pits = {}
 time = 480
@@ -38,8 +42,9 @@ youFound = pyglet.text.Label("",
                              font_size = 12,
                              x = 336, y = 256,
                              anchor_x = 'left', anchor_y = 'top')
-pitStats = pyglet.text.Label("",
-                             font_name = "Times New Roman",
+pitStats = pyglet.text.Label("Click anywhere on the map to dig a hole!",
+                             font_name = "Helvetica",
+                             bold = True,
                              font_size = 12,
                              x = 336, y = 320,
                              anchor_x = 'left', anchor_y = 'top')
@@ -104,7 +109,8 @@ def pickPit(x, y):
 @gameWindow.event
 def on_draw():
     gameWindow.clear()
-    siteMap.blit(0,0)
+    for tile in gameMap:
+        tile[0].blit(tile[1],tile[2])
     youFound.draw()
     pitStats.draw()
     for mark in marks:
