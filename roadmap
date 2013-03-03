@@ -1,0 +1,29 @@
+archaeology game:
+
+3 tracked variables by the player:
+Time
+Labor
+Funding
+
+Each pit has a few characteristics:
+Difficulty
+Size (chosen by player)
+artifact/feature desnity
+
+Each variable makes a pit take longer to excavate
+
+Place random features like battleship
+Scatter artifacts around them according to some model
+
+Start with a fabricated alien culture, then can move on to real world cultures and models
+
+Start with a set site with enough room to keep someone busdy "all summer"
+Then move on to contract type projects and introduce variable digging speeds.
+Speed a group up by, say, 200%, and they start missing artifacts (which of course also speed them up) but reward with more time & funding (phases 2 and 3) if a "site" is found.  May or may not be a site in each phase!
+
+Breakdown:
+Get something on the screen
+Try config files from the beginning
+Work on excavating an individual pit in the command line
+THEN work on timing, and choosing places to dig on the site
+And then random site generation.
