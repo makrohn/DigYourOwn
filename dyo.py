@@ -25,7 +25,6 @@ glEnable(GL_BLEND)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
 gameWindow = pyglet.window.Window()
-siteMap = pyglet.resource.image('resources/map.png')
 xMark = pyglet.image.load('resources/x.png')
 grass = tileloader.loadTileset('resources/grass.png')
 textMap = tileloader.loadTmx('resources/demo.tmx')
@@ -110,7 +109,7 @@ def pickPit(x, y):
 def on_draw():
     gameWindow.clear()
     for tile in gameMap:
-        tile[0].blit(tile[1],tile[2])
+        tile.image.blit(tile.x,tile.y)
     youFound.draw()
     pitStats.draw()
     for mark in marks:

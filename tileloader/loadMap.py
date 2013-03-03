@@ -16,6 +16,12 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import pyglet
 
+class mapTile(object):
+    def __init__(self,image,x,y):
+        self.image = image
+        self.x = x
+        self.y = y
+
 def loadTileset(tileset):
     tileSetIndex = {}
     tileset = pyglet.image.load(tileset)
@@ -52,7 +58,8 @@ def renderTiles(tmxMap, tileSet):
         x = 0
         for tileIndex in yrow:
             if tileIndex != "":
-                tiles.append([tileSet[int(tileIndex)],x,y])
+                tile = mapTile(tileSet[int(tileIndex)],x,y)
+                tiles.append(tile)
                 x += 32
         y += 32
     return tiles
