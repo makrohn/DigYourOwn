@@ -18,13 +18,10 @@ import genPit
 from genPit import pit
 import pyglet
 from pyglet.window import mouse
-from pyglet.gl import *
 import tileloader
 
-glEnable(GL_BLEND)
-glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-
 gameWindow = pyglet.window.Window()
+
 xMark = pyglet.image.load('resources/x.png')
 grass = tileloader.loadTileset('resources/grass.png')
 textMap = tileloader.loadTmx('resources/demo.tmx')
@@ -83,7 +80,7 @@ for i in range (1,11):
     for j in range (1,11):
         dugPit = pit(i,j)
         pits[dugPit.name] = dugPit
-        
+      
 def pickPit(x, y):
     if 0 < x < 11 and 0 < y < 11:
         results = digPit(x, y)

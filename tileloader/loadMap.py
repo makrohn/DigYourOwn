@@ -16,12 +16,14 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import pyglet
 
+# Each 32x32 tile on the map has x and y as an origin
 class mapTile(object):
     def __init__(self,image,x,y):
         self.image = image
         self.x = x
         self.y = y
 
+# Load a single 32x32 tileset and index it the same way Tiled does
 def loadTileset(tileset):
     tileSetIndex = {}
     tileset = pyglet.image.load(tileset)
@@ -40,6 +42,7 @@ def loadTileset(tileset):
         y -= 32
     return tileSetIndex
 
+# Load a .tmx file from <xml> format
 def loadTmx(tmxfile):
     tmxMap = []
     tmx = open(tmxfile, 'r+')
@@ -51,6 +54,7 @@ def loadTmx(tmxfile):
     tmxMap = tmxMap[::-1]
     return tmxMap
 
+# Create a list of tiles paired with their locations
 def renderTiles(tmxMap, tileSet):
     tiles = []
     y = 0
